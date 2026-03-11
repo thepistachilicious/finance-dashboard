@@ -6,9 +6,13 @@ import {
   ClockIcon,
   CurrencyDollarIcon,
   UserCircleIcon,
+  TrashIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
+import { updateInvoice } from '@/app/lib/actions';
+import { deleteInvoice } from '@/app/lib/actions';
+
 
 export default function EditInvoiceForm({
   invoice,
@@ -17,8 +21,10 @@ export default function EditInvoiceForm({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
+  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+ 
   return (
-    <form>
+    <form action={updateInvoiceWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -118,6 +124,19 @@ export default function EditInvoiceForm({
         </Link>
         <Button type="submit">Edit Invoice</Button>
       </div>
+    </form>
+  );
+}
+
+export function DeleteInvoice({ id }: { id: string }) {
+  const deleteInvoiceWithId = deleteInvoice.bind(null, id);
+ 
+  return (
+    <form action={deleteInvoiceWithId}>
+      <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
+        <span className="sr-only">Delete</span>
+        <TrashIcon className="w-4" />
+      </button>
     </form>
   );
 }
